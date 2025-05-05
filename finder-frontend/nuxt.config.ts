@@ -24,5 +24,15 @@ export default defineNuxtConfig({
     },
     display: 'swap', // Optional, for performance
   },
+
+  app: {
+    head: {
+      title: 'Finder',
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/lovecat.png', sizes: '16x16' },
+
+      ]
+    }
+  }
   
 })
