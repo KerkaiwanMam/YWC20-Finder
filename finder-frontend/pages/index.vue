@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="bg-pink-500 text-white p-4 rounded-md">
+        <div class="bg-pink-500 text-white font-extrabold p-4 ">
             <h1>รายชื่อผู้สมัคร</h1>
         </div>
         <!-- แสดงข้อความผิดพลาดเมื่อมีข้อผิดพลาด -->

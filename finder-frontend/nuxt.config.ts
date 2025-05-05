@@ -4,10 +4,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   modules: [
-    '@nuxt/ui', 
-    '@nuxt/image', 
-    '@nuxt/icon', 
-    '@nuxt/fonts'
+    '@nuxt/ui',
+    '@nuxt/image',
+    '@nuxt/icon',
+    '@nuxt/fonts',
+    '@nuxtjs/google-fonts',
   ],
   vite: {
     plugins: [
@@ -17,11 +18,11 @@ export default defineNuxtConfig({
   css: [
     '@/assets/css/main.css',
   ],
-  fonts: {
-    google: {
-      families: {
-        'Noto+Sans+Thai': true,  // ฟอนต์ Noto Sans Thai
-      },
+  googleFonts: {
+    families: {
+      'Noto Sans Thai': [100, 200, 300, 400, 500, 600, 700, 800, 900],
     },
+    display: 'swap', // Optional, for performance
   },
+  
 })
