@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-for="major in ['design', 'content', 'programming']"
+      v-for="major in ['design', 'content', 'programming', 'marketing']"
       :key="major"
       class="mb-8"
     >
