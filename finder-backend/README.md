@@ -41,5 +41,9 @@ npm install -g nodemon
 
 nodemon --exec python app.py
 
+
+
+http://127.0.0.1:8000/docs#/
+
 uvicorn app:app --reload
 uvicorn app:app --reload --port 5000
