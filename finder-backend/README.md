@@ -40,3 +40,6 @@ npm install -g nodemon
 🚀 Run with Nodemon
 
 nodemon --exec python app.py
+
+uvicorn app:app --reload
+uvicorn app:app --reload --port 5000

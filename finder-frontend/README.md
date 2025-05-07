@@ -25,6 +25,7 @@ bun install
 Start the development server on `http://localhost:3000`:
 
 ```bash
+cd finder-frontend
 # npm
 npm run dev
 

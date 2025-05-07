@@ -1,27 +1,27 @@
 <template>
-    <div>
-      <div class="bg-pink-500 text-white font-extrabold p-4">
-        <h1>รายชื่อผู้สมัคร</h1>
-      </div>
-
-      <!-- ช่องค้นหา -->
-      <SearchInput @search="handleSearch" />
-
-      <!-- ข้อความผิดพลาด -->
-      <div v-if="error" class="text-red-500 p-4">
-        {{ error }}
-      </div>
-
-      <!-- กำลังโหลด -->
-      <div v-else-if="loading" class="text-blue-500 p-4">
-        กำลังโหลด...
-      </div>
-
-      <!-- แสดงรายชื่อผู้สมัคร -->
-      <div v-else>
-        <CandidatesList :candidates="filteredCandidates" />
-      </div>
+  <div>
+    <div class="bg-pink-500 text-white font-extrabold p-4">
+      <h1>รายชื่อผู้สมัคร</h1>
     </div>
+
+    <!-- ช่องค้นหา -->
+    <SearchInput @search="handleSearch" />
+
+    <!-- ข้อความผิดพลาด -->
+    <div v-if="error" class="text-red-500 p-4">
+      {{ error }}
+    </div>
+
+    <!-- กำลังโหลด -->
+    <div v-else-if="loading" class="text-blue-500 p-4">
+      กำลังโหลด...
+    </div>
+
+    <!-- แสดงรายชื่อผู้สมัคร -->
+    <div v-else>
+      <CandidatesList :candidates="filteredCandidates" />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -47,47 +47,66 @@ export default {
   },
   methods: {
     async fetchCandidates(query = '') {
-      this.loading = true; // เริ่มต้นโหลดข้อมูล
+      this.loading = true;
       this.error = null;
       this.candidates = null;
       try {
         const url = query
-          ? `http://localhost:5000/api/candidates?q=${encodeURIComponent(query)}`
-          : `http://localhost:5000/api/candidates`;
+          ? `http://localhost:8000/api/candidates?q=${encodeURIComponent(query)}`
+          : `http://localhost:8000/api/candidates`;
         const res = await fetch(url);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
+        console.log(data); // เพิ่มบรรทัดนี้เพื่อตรวจสอบข้อมูล
         if (data.error) {
           this.error = data.error;
         } else {
-          this.candidates = data.content || data;
+          // กำหนดค่าของ candidates โดยแยกข้อมูลตามหมวดหมู่
+          this.candidates = {
+            design: data.design || [],
+            programming: data.programming || [],
+            marketing: data.marketing || [],
+            content: data.content || [],
+          };
           this.filterCandidates(); // ฟิลเตอร์ข้อมูลเมื่อได้ผลลัพธ์
         }
       } catch (e) {
         this.error = 'ไม่สามารถโหลดข้อมูลได้: ' + e.message;
       } finally {
-        this.loading = false; // สิ้นสุดการโหลด
+        this.loading = false;
       }
-    },
-    handleSearch(query) {
+    }, handleSearch(query) {
+      console.log('Received search query:', query);  // เพิ่มบรรทัดนี้เพื่อตรวจสอบ
       this.searchQuery = query;
-      this.filterCandidates(); // ฟิลเตอร์ข้อมูลใหม่เมื่อค้นหา
+      this.filterCandidates();  // ฟิลเตอร์ข้อมูลเมื่อค้นหา
     },
+
     filterCandidates() {
       if (this.candidates) {
-        if (this.searchQuery.trim() === '') {
-          this.filteredCandidates = this.candidates; // แสดงข้อมูลทั้งหมดเมื่อไม่มีการค้นหา
-        } else {
-          // ฟิลเตอร์ข้อมูลให้แสดงเฉพาะที่ตรงกับคำค้นหาจากฟิลด์ต่างๆ
-          this.filteredCandidates = this.candidates.filter(candidate =>
+        const filtered = {
+          design: [],
+          programming: [],
+          marketing: [],
+          content: []
+        };
+
+        // กรองผู้สมัครจากทุกหมวดหมู่
+        Object.keys(this.candidates).forEach((category) => {
+          filtered[category] = this.candidates[category].filter(candidate =>
             candidate.firstName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
             candidate.lastName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
             candidate.interviewRefNo.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
             candidate.major.toLowerCase().includes(this.searchQuery.toLowerCase())
           );
-        }
+        });
+
+        // กรองหมวดหมู่ที่มีข้อมูลหลังจากกรอง
+        this.filteredCandidates = filtered;
       }
     }
+
+
   }
+
 };
 </script>
