@@ -16,7 +16,20 @@ export default defineNuxtConfig({
   },
   css: [
     '@/assets/css/main.css',
+    '@/assets/css/animations.css',
   ],
+  ui: {
+    theme: {
+      colors: [
+        'primary',
+        'secondary',
+        'secondary2',
+        'background',
+        'cancel',
+        'bordercancel'
+      ]
+    }
+  },
   googleFonts: {
     families: {
       'Noto Sans Thai': [100, 200, 300, 400, 500, 600, 700, 800, 900],
@@ -33,5 +46,5 @@ export default defineNuxtConfig({
       ]
     }
   }
-  
+
 })
