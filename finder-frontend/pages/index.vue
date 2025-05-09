@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-background via-primary to-secondary-2 text-white flex items-center justify-center">
-    <div class="text-center px-6 py-8 max-w-2/3 bg-white/80 rounded-lg shadow-lg p-8 backdrop-blur-sm animate-fade-in-up">
-
+    <div class="text-center px-6 py-8 max-w-1/2 bg-white/80 rounded-lg shadow-lg p-8 backdrop-blur-sm animate-fade-in-up">
+      <NuxtImg :src="Images.logo" alt="Logo" class="w-24 h-24 mx-auto mb-4 animate-fade-in-up delay-100" />
       <div
         class="mb-4 inline-block px-3 py-1 rounded-full bg-background/30 text-secondary-2 text-sm font-medium border border-secondary-2-500 animate-fade-in delay-100">
         🚀 Web Programming
@@ -32,5 +32,7 @@
 </template>
 
 <script setup>
-// ไม่มี logic พิเศษในหน้านี้
+import { Images } from '@/assets/index'
+
+
 </script>
