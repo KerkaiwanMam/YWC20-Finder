@@ -5,20 +5,37 @@ from services.filter_service import filter_by_category, filter_by_query
 def fetch_candidates(query: str = '', allowed_keys=None):
     if allowed_keys is None:
         allowed_keys = ['design', 'programming', 'marketing', 'content']
+    
+    try:
+        # ทำการร้องขอข้อมูลจาก API
+        response = requests.get(
+            CANDIDATES_API_URL,
+            headers={"x-reference-id": INTERVIEW_REF}
+        )
 
-    response = requests.get(
-        CANDIDATES_API_URL,
-        headers={"x-reference-id": INTERVIEW_REF}
-    )
-    response.raise_for_status()
+        # ตรวจสอบสถานะของการร้องขอ (ตรวจสอบว่าไม่เกิดข้อผิดพลาดจาก API)
+        response.raise_for_status()
 
-    all_data = response.json()
+        # ดึงข้อมูลจาก API
+        all_data = response.json()
 
-    # Filter only the selected categories
-    categorized_data = filter_by_category(all_data, allowed_keys)
+        # ตรวจสอบว่ามีข้อมูลใน API หรือไม่
+        if not all_data:
+            raise ValueError("ไม่พบข้อมูลจาก API")
 
-    # Filter by query if provided
-    if query:
-        categorized_data = filter_by_query(categorized_data, query)
+        # กรองข้อมูลตามหมวดหมู่ที่เลือก
+        categorized_data = filter_by_category(all_data, allowed_keys)
 
-    return categorized_data
+        # กรองข้อมูลตามคำค้นหาหากมีการระบุ query
+        if query:
+            categorized_data = filter_by_query(categorized_data, query)
+
+        return categorized_data
+
+    except requests.exceptions.RequestException as err:
+        # จัดการข้อผิดพลาดที่เกิดจากการร้องขอ API
+        raise ValueError(f"ข้อผิดพลาดในการร้องขอข้อมูลจาก API: {err}")
+    
+    except Exception as err:
+        # จัดการข้อผิดพลาดทั่วไปในฟังก์ชัน
+        raise ValueError(f"เกิดข้อผิดพลาดในการประมวลผลข้อมูล: {err}")
