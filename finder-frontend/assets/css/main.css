@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "@nuxt/ui";
+
+body {
+  font-family: "Noto Sans Thai", sans-serif;
+}
+
+@theme static {
+  --color-primary: #8677a7;
+  --color-secondary: #65558f;
+  --color-secondary-2: #420f75;
+  --color-background: #b2aac7;
+  --color-cancel: #800020;
+  --color-bordercancel: #990033;
+  --color-background2: #0f172b;
+}
