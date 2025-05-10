@@ -1,30 +1,33 @@
 <template>
   <div class="p-4">
-    <input type="text" v-model="searchText" @input="onInput" placeholder="ค้นหาด้วยชื่อ, สกุล หรือรหัสสัมภาษณ์"
-      class="w-full p-2 border rounded-md" />
+    <div class="flex gap-2">
+      <input
+        type="text"
+        :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
+        @keyup.enter="triggerSearch"
+        placeholder="ค้นหาด้วยชื่อ, สกุล หรือรหัสสัมภาษณ์"
+        class="w-full text-white/60 p-2 border rounded-md border-white bg-transparent outline-none"
+      />
+      <button @click="triggerSearch" class="bg-white text-black px-4 rounded-md hover:bg-gray-200 transition">
+        ค้นหา
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      searchText: '',
-      debounceTimer: null
-    };
+  props: {
+    modelValue: {
+      type: String,
+      default: ''
+    }
   },
   methods: {
-    onInput() {
-      clearTimeout(this.debounceTimer);
-      this.debounceTimer = setTimeout(() => {
-        console.log('Searching for:', this.searchText.trim());  // เพิ่มบรรทัดนี้เพื่อตรวจสอบค่า
-        this.$emit('search', this.searchText.trim());
-      }, 300); // หน่วง 300ms
+    triggerSearch() {
+      this.$emit('search', this.modelValue.trim());
     }
-
-  },
-  beforeDestroy() {
-    clearTimeout(this.debounceTimer);
   }
 };
 </script>
