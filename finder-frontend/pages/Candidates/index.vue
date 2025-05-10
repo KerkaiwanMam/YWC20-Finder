@@ -5,7 +5,7 @@
       <h1>รายชื่อผู้สมัคร</h1>
     </div>
 
-    <div class="px-16 ">
+    <div class="px-32 ">
       <!-- ช่องค้นหา -->
       <SearchInput @search="handleSearch" />
 

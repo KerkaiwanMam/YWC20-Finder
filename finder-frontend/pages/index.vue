@@ -1,5 +1,7 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-secondary-2 via-primary to-black/20 text-white flex items-center justify-center">
+  <div class="min-h-screen bg-gradient-to-br from-black/20 via-primary to-secondary-2 text-white flex items-center justify-center">
+        <RainCanvas />
+
     <div class="text-center px-6 py-8 max-w-1/2 bg-background2 rounded-lg shadow-lg p-8 backdrop-blur-sm animate-fade-in-up">
       <img src="/logo.svg" alt="Logo" class="w-max h-auto mx-auto mb-4 mt-8 animate-fade-in-up delay-100" />
       <div
@@ -30,6 +32,7 @@
 </template>
 
 <script setup>
+import RainCanvas from '@/components/Rain/RainCanvas.vue'
 
 
 </script>
