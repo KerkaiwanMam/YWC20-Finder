@@ -100,6 +100,7 @@ export default {
       this.fetchCandidates(query);  // ฟิลเตอร์ข้อมูลเมื่อค้นหา
     },
 
+
     // filterCandidates() {
     //   if (this.candidates) {
     //     const filtered = {
