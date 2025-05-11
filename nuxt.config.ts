@@ -34,17 +34,21 @@ export default defineNuxtConfig({
     families: {
       'Noto Sans Thai': [100, 200, 300, 400, 500, 600, 700, 800, 900],
     },
-    display: 'swap', // Optional, for performance
+    display: 'swap',
   },
 
   app: {
+    baseURL: '/YWC20-Finder/', // ✅ แก้ตรงนี้ให้ตรงกับชื่อ repo
     head: {
       title: 'Finder',
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/lovecat.png', sizes: '16x16' },
-
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          href: '/YWC20-Finder/lovecat.png', // ✅ แก้ path ให้ตรง baseURL
+          sizes: '16x16'
+        }
       ]
     }
   }
-
 })

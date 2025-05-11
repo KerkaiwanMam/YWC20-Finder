@@ -1,30 +1,40 @@
 <template>
-  <div class="bg-white min-h-screen">
-    <div class="bg-background2 text-white font-extrabold p-12 text-center">
-      <img src="/logo.svg" alt="Logo" class="w-max h-auto mx-auto mb-4 mt-8 animate-fade-in-up delay-100" />
-      <h1>รายชื่อผู้สมัคร</h1>
-    </div>
+  <div class="bg-background2 text-white flex items-center justify-center relative min-h-screen">
 
-    <div class="px-32 ">
-      <!-- ช่องค้นหา -->
-      <SearchInput @search="handleSearch" />
+    <!-- Background RainCanvas -->
+    <RainCanvas class="absolute top-0 left-0 w-full h-full z-0" />
 
-      <!-- ข้อความผิดพลาด -->
-      <div v-if="error" class="text-red-500 p-4">
-        {{ error }}
-      </div>
+    <!-- Main Content -->
+    <div class="bg-background2 relative z-10 w-full max-w-4xl px-4  py-12">
 
       <!-- กำลังโหลด -->
-      <div v-else-if="loading" class="text-blue-500 p-4">
-        กำลังโหลด...
+      <div v-if="loading" class="text-center text-blue-500 text-xl py-20 animate-pulse">
+        กำลังโหลดข้อมูลผู้สมัคร...
       </div>
 
-      <!-- แสดงรายชื่อผู้สมัคร -->
+      <!-- หลังโหลดเสร็จ -->
       <div v-else>
-        <CandidatesList :candidates="filteredCandidates" />
+        <div class="text-white font-extrabold text-center mb-8">
+          <img src="/logo.svg" alt="Logo" class="w-max h-auto mx-auto mb-4 mt-8 animate-fade-in-up delay-100" />
+          <h1 class="text-3xl">รายชื่อผู้สมัคร</h1>
+        </div>
+
+        <!-- ช่องค้นหา -->
+        <div class="mb-6">
+          <SearchInput v-model="searchQuery" @search="handleSearch" />
+        </div>
+
+        <!-- ข้อความผิดพลาด -->
+        <div v-if="error" class="text-red-500 text-center p-4">
+          {{ error }}
+        </div>
+
+        <!-- รายชื่อ -->
+        <div v-else>
+          <CandidatesList :candidates="filteredCandidates" />
+        </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -56,8 +66,9 @@ export default {
       this.candidates = null;
       try {
         const url = query
-          ? `http://localhost:8000/api/candidates?q=${encodeURIComponent(query)}`
-          : `http://localhost:8000/api/candidates`;
+          ? `https://ywc20-backend.onrender.com/api/candidates?q=${encodeURIComponent(query)}`
+          : `http://127.0.0.1:8000/api/candidates` // ใช้ URL ของ backend ที่คุณต้องการ
+          ;
         const res = await fetch(url);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
@@ -75,7 +86,12 @@ export default {
           this.filteredCandidates = this.candidates; // ✅ ใช้ค่าที่ได้จาก backend โดยตรง
         }
       } catch (e) {
-        this.error = 'ไม่สามารถโหลดข้อมูลได้: ' + e.message;
+        // ตรวจสอบว่ามีข้อผิดพลาดที่เกี่ยวข้องกับ status 500 หรือไม่
+        if (e.message.includes('HTTP error! status: 500')) {
+          this.error = 'ไม่พบรายชื่อที่คุณกำลังค้นหา กรุณากรอกรายละเอียดเพิ่มขึ้น';
+        } else {
+          this.error = 'ไม่สามารถโหลดข้อมูลได้: ' + e.message;
+        }
       } finally {
         this.loading = false;
       }
@@ -84,6 +100,7 @@ export default {
       this.searchQuery = query;
       this.fetchCandidates(query);  // ฟิลเตอร์ข้อมูลเมื่อค้นหา
     },
+
 
     // filterCandidates() {
     //   if (this.candidates) {
