@@ -67,7 +67,8 @@ export default {
       try {
         const url = query
           ? `https://ywc20-backend.onrender.com/api/candidates?q=${encodeURIComponent(query)}`
-          : `https://ywc20-backend.onrender.com/api/candidates`;
+          : `http://127.0.0.1:8000/api/candidates` // ใช้ URL ของ backend ที่คุณต้องการ
+          ;
         const res = await fetch(url);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
