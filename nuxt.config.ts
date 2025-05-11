@@ -36,7 +36,7 @@ export default defineNuxtConfig({
     },
     display: 'swap',
   },
-
+  ssr: false,
   app: {
     baseURL: '/YWC20-Finder/', // ✅ แก้ตรงนี้ให้ตรงกับชื่อ repo
     head: {
