@@ -1,19 +1,13 @@
-import tailwindcss from '@tailwindcss/vite'
-
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
+  ssr: false,
   modules: [
     '@nuxt/ui',
     '@nuxt/image',
     '@nuxt/icon',
     '@nuxtjs/google-fonts',
   ],
-  vite: {
-    plugins: [
-      tailwindcss(),
-    ],
-  },
   css: [
     '@/assets/css/main.css',
     '@/assets/css/animations.css',
@@ -36,16 +30,15 @@ export default defineNuxtConfig({
     },
     display: 'swap',
   },
-  ssr: false,
   app: {
-    baseURL: '/YWC20-Finder/', // ✅ แก้ตรงนี้ให้ตรงกับชื่อ repo
+    baseURL: '/YWC20-Finder/', 
     head: {
       title: 'Finder',
       link: [
         {
           rel: 'icon',
           type: 'image/x-icon',
-          href: '/YWC20-Finder/lovecat.png', // ✅ แก้ path ให้ตรง baseURL
+          href: '/YWC20-Finder/lovecat.png',
           sizes: '16x16'
         }
       ]
