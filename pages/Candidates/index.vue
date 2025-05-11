@@ -66,8 +66,8 @@ export default {
       this.candidates = null;
       try {
         const url = query
-          ? `http://localhost:8000/api/candidates?q=${encodeURIComponent(query)}`
-          : `http://localhost:8000/api/candidates`;
+          ? `https://ywc20-backend.onrender.com/api/candidates?q=${encodeURIComponent(query)}`
+          : `https://ywc20-backend.onrender.com/api/candidates`;
         const res = await fetch(url);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
