@@ -20,7 +20,7 @@
       <NuxtLink
         to="/Candidates"
         class="inline-block bg-primary hover:bg-background text-white font-semibold px-6 py-3 rounded-full shadow-lg transition duration-200 animate-fade-in-up delay-500">
-        Explore projects →
+        เริ่มค้นหา →
       </NuxtLink>
 
       <p class="mt-4 text-sm text-gray-400 animate-fade-in-up delay-700">
