@@ -23,9 +23,7 @@
         เริ่มค้นหา →
       </NuxtLink>
 
-      <p class="mt-4 text-sm text-gray-400 animate-fade-in-up delay-700">
-        90% of projects are free to do
-      </p>
+      
 
     </div>
   </div>
